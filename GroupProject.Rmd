@@ -109,7 +109,28 @@ the drive and the time to failure of the drive are associated.
 drives.failed=which(failed=="TRUE") #subset of cases that failed
 ```
 
+(a) [1 mark] Compute and interpret the correlation between the mean operating temperature and the number of days until failure.
+```{r}
+failed.meantemp=meantemp[drives.failed]
+failed.days=days[drives.failed]
 
+cor.test(failed.meantemp,failed.days)
+```
+
+(b) [2 marks] Use randomisation to test at a significance level of 5% whether there is evidence that a higher mean op-
+erating temperature is associated to earlier failure.
+```{r}
+
+```
+
+(c) [1 mark] Interpret your findings, comparing the results from parts (a) and (b). Discuss, in particular, whether
+there is evidence that a higher operating temperature causes drives to fail earlier.
+
+```{r}
+
+```
+
+The end
 
 ```{r}
 #leave this as the last chunk
