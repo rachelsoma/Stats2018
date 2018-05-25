@@ -65,14 +65,14 @@ We want to investigate the proportion of drives that fail in the first year of o
 
 ```{r}
 n=nrow(drives)#total number of cases
-drives.failed=which(failed=="TRUE" & days < 366) #subset of cases that filed in first year
-n.drives.failed=length(drives.failed) #number of cases in subset
-paste(length(drives.failed),"drives have failed in the first year")
+drives.failed.y1=which(failed=="TRUE" & days < 366) #subset of cases that filed in first year
+n.drives.failed.y1=length(drives.failed.y1) #number of cases in subset
+paste(length(drives.failed.y1),"drives have failed in the first year")
 ```
 (b) [1 mark] Compute a point estimate for the proportion of drives that fail in the first year of operation.
 
 ```{r}
-phat=n.drives.failed/n
+phat=n.drives.failed.y1/n
 paste("Phat of drives that fail in the first year is",phat, "(or", phat*100,"%)")
 ```
 
@@ -86,8 +86,8 @@ year of operation
 b = 10000 #number of bootstrap statistics
 boot.dist = rep(NA, b)
 for (i in 1:b) {
-  boot.sample = sample(n.drives.failed, replace=TRUE)
-  boot.dist[i] = mean(drives.failed[boot.sample])
+  boot.sample = sample(n.drives.failed.y1, replace=TRUE)
+  boot.dist[i] = mean(drives.failed.y1[boot.sample])
 }
 
  #checking distribution is bell shaped
@@ -100,6 +100,16 @@ hist(boot.dist,
 quantile(boot.dist, c(0.005, 0.995)) ##99% confidence interval
 
 ```
+Part 2 Temperature and time to failure
+--------------------------------------------------------
+
+For this part, we only consider the drives that failed. We want to analyse whether the mean operating temperature of
+the drive and the time to failure of the drive are associated.
+```{r}
+drives.failed=which(failed=="TRUE") #subset of cases that failed
+```
+
+
 
 ```{r}
 #leave this as the last chunk
