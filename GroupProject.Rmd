@@ -52,28 +52,28 @@ A drive that is listed as not having failed either was still operational at the 
 removed for other reasons, for instance a capacity upgrade.
 
 
+```{r}
+drives = read.csv("HardDisks.csv",header=TRUE) #Load a dataset from .csv file
+attach(drives)
+```
+
 Part One - Proportion of drives that fail early
 --------------------------------------------------------
 
 We want to investigate the proportion of drives that fail in the first year of operation.
 (a) [1 mark] Create a subset of the cases that is relevant for this analysis and print the number of cases in that subset.
 
-
 ```{r}
-drives = read.csv("HardDisks.csv",header=TRUE) #Load a dataset from .csv file
-attach(drives)
-drives.failed = days[days < 366 & failed == "TRUE"]
-noFCases = length(drives.failed)
-noFCases
-noCases = length(days)
-noCases
+n=nrow(drives)#total number of cases
+drives.failed=which(failed=="TRUE" & days < 366) #subset of cases that filed in first year
+n.drives.failed=length(drives.failed) #number of cases in subset
+paste(length(drives.failed),"drives have failed in the first year")
 ```
 (b) [1 mark] Compute a point estimate for the proportion of drives that fail in the first year of operation.
 
 ```{r}
-pointEstimate = noFCases / noCases
-pointEstimatePercentage = pointEstimate * 100
-pointEstimatePercentage
+phat=n.drives.failed/n
+paste("Phat of drives that fail in the first year is",phat, "(or", phat*100,"%)")
 ```
 
 
@@ -81,15 +81,27 @@ pointEstimatePercentage
 year of operation
 
 ```{r}
-b = 10
-bootDist = rep(0,b)
+
+##Generating a Bootstrap Distribution
+b = 10000 #number of bootstrap statistics
+boot.dist = rep(NA, b)
 for (i in 1:b) {
-  s = sample(HardDisks$days, replace = TRUE) #There is something wrong here... can't figure out how to get the sample with two criteria
-  bootDist[i] = length(s[1][s[1] < 366 & s[2] == "TRUE"]) / noCases
+  boot.sample = sample(n.drives.failed, replace=TRUE)
+  boot.dist[i] = mean(drives.failed[boot.sample])
 }
 
-bootDist
-
-quantile(bootDist, c(0.005,0.995))
+ #checking distribution is bell shaped
+hist(boot.dist,
+     main = "Histogram of Bootstrap distribution",
+     breaks=50)
 ```
 
+```{r}
+quantile(boot.dist, c(0.005, 0.995)) ##99% confidence interval
+
+```
+
+```{r}
+#leave this as the last chunk
+detach(drives)
+```
