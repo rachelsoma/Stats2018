@@ -120,15 +120,54 @@ cor.test(failed.meantemp,failed.days)
 (b) [2 marks] Use randomisation to test at a significance level of 5% whether there is evidence that a higher mean op-
 erating temperature is associated to earlier failure.
 ```{r}
+#paired t-test
+
+t.test(failed.days, 
+       failed.meantemp, 
+       paired=TRUE, 
+       conf.level=0.95)
+
+
+pairs(failed.days ~ failed.meantemp)
+
+smoothScatter(failed.days, failed.meantemp,
+     pch = ".",
+     xlab="Days until failure",
+     ylab="mean temperature")
+
+abline(0,1, col="blue", lwd=2)
+
 
 ```
 
 (c) [1 mark] Interpret your findings, comparing the results from parts (a) and (b). Discuss, in particular, whether
 there is evidence that a higher operating temperature causes drives to fail earlier.
 
+
+
+Part 3 Three 2TB drive models
+--------------------------------------------------------
+For this part, we only consider 2TB drives with the following model identifiers: 
+"Hitachi HDS723020BLA642"
+"ST320005XXXX" (Seagate)
+"WDC WD20EFRX" (Western Digital)
+```{r}
+drives.hitashi=which(model=="Hitachi HDS723020BLA642")
+drives.seagate=which(model=="ST320005XXXX")
+drives.western=which(model=="WDC WD20EFRX")
+```
+
+(a) [2 marks] At a significance level of 1%, test whether there is evidence for a difference in the mean operating temperature between the three drive models and conduct a pairwise t-test.
+Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
 ```{r}
 
 ```
+(b) [3 marks] At a significance level of 1%, test whether there is evidence for a difference in the proportion of failed
+drives between the three drive models. Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
+```{r}
+
+```
+
 
 The end
 
