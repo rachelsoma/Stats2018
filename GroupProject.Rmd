@@ -32,7 +32,7 @@ Name               | Student Number | Contribution (%)
 -------------------|----------------|-----------------
 Rachel Hardie      |18820821        |
 Dylan Wang         |18998014        |
-                   |                |
+Bradley McInerney  |19029900        |
                    |                |
 
 <div style="page-break-before:always;"></div>
