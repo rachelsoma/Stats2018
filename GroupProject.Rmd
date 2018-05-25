@@ -79,6 +79,8 @@ pointEstimatePercentage
 
 (c) [2 marks] Use bootstrapping to compute a 99% confidence interval for the proportion of drives that fail in the first
 year of operation
+
+```{r}
 b = 10
 bootDist = rep(0,b)
 for (i in 1:b) {
@@ -89,5 +91,5 @@ for (i in 1:b) {
 bootDist
 
 quantile(bootDist, c(0.005,0.995))
-
+```
 
