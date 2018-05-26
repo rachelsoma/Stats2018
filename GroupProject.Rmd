@@ -53,8 +53,14 @@ removed for other reasons, for instance a capacity upgrade.
 
 
 ```{r}
+#Import drives data set
 drives = read.csv("HardDisks.csv",header=TRUE) #Load a dataset from .csv file
 attach(drives)
+
+#Check if serial_number in indeed unique
+n_occur <- data.frame(table(serial_number))
+n_occur[n_occur$Freq > 1,]  
+#As there are 0 rows that appear twice then it is confirmed unique in this set
 ```
 
 Part One - Proportion of drives that fail early
