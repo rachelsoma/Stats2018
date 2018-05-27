@@ -170,13 +170,11 @@ P = drives[,"meantemp"] #The data the subsets came from
 mt1=drives[model=="Hitachi HDS723020BLA642", "meantemp"]
 mt2=drives[model=="ST320005XXXX",            "meantemp"]
 mt3=drives[model=="WDC WD20EFRX",            "meantemp"]
-18
 
 paste("Using an F-distribution to compute p-values requires all data that the subsets came from being normally distributed and all populations having the same variance")
 hist(P, breaks=100)
 paste("Via a histogram of the data the subsets came from, we can assume it is normally distributed")
 paste("As all pf the data that the subsets came from is the same set AND the sample standard deviations(", sd(mt1), sd(mt2), sd(mt3), ") differ by less then factors of 2, we can assume that the population variances are the same.")
-
 
 MT = c(mt1, mt2, mt3) #combined set
 N=length(MT) #length of combined set
@@ -194,10 +192,15 @@ paste("At a signifigance level of 1% (0.01) and a p-value of", pval, ", as the p
 paste("So there is statistical evidence on a 1% signifigance that there is no difference in mean operating temperatures between the 3 tested divice models.")
 
 #Pariwise T-test
+MT.df = drives[model=="Hitachi HDS723020BLA642" | model=="ST320005XXXX" | model=="WDC WD20EFRX", ] #get MT but as a dataframe
+pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the individual differences
 
 #Discussion
-paste("The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167.")
-paste("This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.")
+cat("Discussion:",
+      "\n>This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.",
+      "\n>The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167.",
+      "\n>The pairwise t-test shows that the higest difference in means was between the models 'WDC WD20EFRX' and 'ST320005XXXX'.",
+      "\n>It also shows that the lowest was between 'Hitachi HDS723020BLA642' and 'WDC WD20EFRX'.")
 ```
 (b) [3 marks] At a significance level of 1%, test whether there is evidence for a difference in the proportion of failed
 drives between the three drive models. Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
