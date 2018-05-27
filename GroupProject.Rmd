@@ -197,6 +197,7 @@ paste("So there is statistical evidence on a 1% signifigance that there is no di
 
 #Discussion
 paste("The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167.")
+paste("This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.")
 ```
 (b) [3 marks] At a significance level of 1%, test whether there is evidence for a difference in the proportion of failed
 drives between the three drive models. Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
