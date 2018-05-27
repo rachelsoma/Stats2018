@@ -157,16 +157,46 @@ For this part, we only consider 2TB drives with the following model identifiers:
 "Hitachi HDS723020BLA642"
 "ST320005XXXX" (Seagate)
 "WDC WD20EFRX" (Western Digital)
-```{r}
-drives.hitashi=which(model=="Hitachi HDS723020BLA642")
-drives.seagate=which(model=="ST320005XXXX")
-drives.western=which(model=="WDC WD20EFRX")
-```
 
 (a) [2 marks] At a significance level of 1%, test whether there is evidence for a difference in the mean operating temperature between the three drive models and conduct a pairwise t-test.
 Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
 ```{r}
+#Hypothisis test
+#H0: The mean of the mean operating temperatures of all 3 tested drives will be the same
+#HA: The mean of the mean operating temperatures for atleast 1 tested drive with differ from the others
 
+#subsetting data
+P = drives[,"meantemp"] #The data the subsets came from
+mt1=drives[model=="Hitachi HDS723020BLA642", "meantemp"]
+mt2=drives[model=="ST320005XXXX",            "meantemp"]
+mt3=drives[model=="WDC WD20EFRX",            "meantemp"]
+18
+
+paste("Using an F-distribution to compute p-values requires all data that the subsets came from being normally distributed and all populations having the same variance")
+hist(P, breaks=100)
+paste("Via a histogram of the data the subsets came from, we can assume it is normally distributed")
+paste("As all pf the data that the subsets came from is the same set AND the sample standard deviations(", sd(mt1), sd(mt2), sd(mt3), ") differ by less then factors of 2, we can assume that the population variances are the same.")
+
+
+MT = c(mt1, mt2, mt3) #combined set
+N=length(MT) #length of combined set
+k = 3 #number of groups
+
+SST=(N-1)*sd(MT)^2
+SSE=(length(mt1)-1)*sd(mt1)^2 + (length(mt2)-1)*sd(mt2)^2 + (length(mt3)-1)*sd(mt3)^2
+SSG=SST-SSE
+fstat = ((SSG/(k-1)) / (SSE/(N-k)))
+
+pval=pf(fstat,k-1,N-k,lower.tail=FALSE)
+print(pval)
+
+paste("At a signifigance level of 1% (0.01) and a p-value of", pval, ", as the p value is greater than the our signifigance level, we do not reject the null hypothisis 'there is no difference in mean operating temperatures between the 3 tested divice models'.") 
+paste("So there is statistical evidence on a 1% signifigance that there is no difference in mean operating temperatures between the 3 tested divice models.")
+
+#Pariwise T-test
+
+#Discussion
+paste("The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167.")
 ```
 (b) [3 marks] At a significance level of 1%, test whether there is evidence for a difference in the proportion of failed
 drives between the three drive models. Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
