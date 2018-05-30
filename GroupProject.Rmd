@@ -220,6 +220,7 @@ paste("So there is statistical evidence on a 1% signifigance that there is no di
 #Pariwise T-test
 MT.df = drives[model=="Hitachi HDS723020BLA642" | model=="ST320005XXXX" | model=="WDC WD20EFRX", ] #get MT but as a dataframe
 pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the individual differences
+```
 
 ###Discussion:
 - This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.
