@@ -121,26 +121,18 @@ for (i in 1:b) {
   boot.dist[i] = sum(boot.sample)/length(boot.sample) #As we are testing for proportion
 }
 hist(boot.dist)
-
-CI = quantile(boot.dist, c(0.005,0.995)) #Quartiles for a 99% CI
-cat("The 99% confidence interval for the proportion of drives that fail in the first year of operation is", CI[1], CI[2])
-
-
-
 ```
 
 ```{r}
-quantile(boot.dist, c(0.005, 0.995)) ##99% confidence interval
-
+CI = quantile(boot.dist, c(0.005,0.995)) #Quartiles for a 99% CI
+cat("The 99% confidence interval for the proportion of drives that fail in the first year of operation is", CI[1], CI[2])
 ```
+
 Part 2 Temperature and time to failure
 --------------------------------------------------------
 
 For this part, we only consider the drives that failed. We want to analyse whether the mean operating temperature of
 the drive and the time to failure of the drive are associated.
-```{r}
-
-```
 
 (a) [1 mark] Compute and interpret the correlation between the mean operating temperature and the number of days until failure.
 ```{r}
@@ -197,10 +189,10 @@ mt1=drives[model=="Hitachi HDS723020BLA642", "meantemp"]
 mt2=drives[model=="ST320005XXXX",            "meantemp"]
 mt3=drives[model=="WDC WD20EFRX",            "meantemp"]
 
-paste("Using an F-distribution to compute p-values requires all data that the subsets came from being normally distributed and all populations having the same variance")
+cat("Using an F-distribution to compute p-values requires all data that the subsets came from being normally distributed and all populations having the same variance\n")
 hist(P, breaks=100)
-paste("Via a histogram of the data the subsets came from, we can assume it is normally distributed")
-paste("As all pf the data that the subsets came from is the same set AND the sample standard deviations(", sd(mt1), sd(mt2), sd(mt3), ") differ by less then factors of 2, we can assume that the population variances are the same.")
+cat("Via a histogram of the data the subsets came from, we can assume it is normally distributed")
+cat("As all pf the data that the subsets came from is the same set AND the sample standard deviations(", sd(mt1), sd(mt2), sd(mt3), ") differ by less then factors of 2, we can assume that the population variances are the same.]n")
 
 MT = c(mt1, mt2, mt3) #combined set
 N=length(MT) #length of combined set
@@ -212,12 +204,11 @@ SSG=SST-SSE
 fstat = ((SSG/(k-1)) / (SSE/(N-k)))
 
 pval=pf(fstat,k-1,N-k,lower.tail=FALSE)
-print(pval)
+#print(pval)
 
-paste("At a signifigance level of 1% (0.01) and a p-value of", pval, ", as the p value is greater than the our signifigance level, we do not reject the null hypothisis 'there is no difference in mean operating temperatures between the 3 tested divice models'.") 
-paste("So there is statistical evidence on a 1% signifigance that there is no difference in mean operating temperatures between the 3 tested divice models.")
+cat("At a signifigance level of 1% (0.01) and a p-value of", pval, ", as the p value is greater than the our signifigance level, we do not reject the null hypothisis 'there is no difference in mean operating temperatures between the 3 tested divice models'. So there is statistical evidence on a 1% signifigance that there is no difference in mean operating temperatures between the 3 tested divice models.\n")
 
-#Pariwise T-test
+#Pairwise T-test
 MT.df = drives[model=="Hitachi HDS723020BLA642" | model=="ST320005XXXX" | model=="WDC WD20EFRX", ] #get MT but as a dataframe
 pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the individual differences
 ```
