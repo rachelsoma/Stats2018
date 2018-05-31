@@ -87,12 +87,9 @@ paste(length(drives.failed.y1),"drives have failed in their first year")
 
 
 
-
-testdata.n  = nrow(drives) #total number of test cases
-
 #Create binomial data for cases that fail in the first year, this makes generating the boostrap much faster
-failedY1.binom = rep(NA, testdata.n)
-for (row in 1:testdata.n){
+failedY1.binom = rep(NA, n)
+for (row in 1:n){
   if(drives[row, "days"]<366 & drives[row, "failed"]==TRUE){ #If they failed when they were under a year old add a 1, else 0, to make is a bonomial
     failedY1.binom[row] = 1
   }else{
