@@ -187,10 +187,10 @@ mt1=drives[model=="Hitachi HDS723020BLA642", "meantemp"]
 mt2=drives[model=="ST320005XXXX",            "meantemp"]
 mt3=drives[model=="WDC WD20EFRX",            "meantemp"]
 
-cat("Using an F-distribution to compute p-values requires all data that the subsets came from being normally distributed and all populations having the same variance\n")
+cat("Using an F-distribution to compute p-values requires all data that the subsets came from being normally distributed and all populations having the same variance.\n")
 hist(P, breaks=100)
 cat("Via a histogram of the data the subsets came from, we can assume it is normally distributed")
-cat("As all pf the data that the subsets came from is the same set AND the sample standard deviations(", sd(mt1), sd(mt2), sd(mt3), ") differ by less then factors of 2, we can assume that the population variances are the same.]n")
+cat("As all pf the data that the subsets came from is the same set AND the sample standard deviations(", sd(mt1), sd(mt2), sd(mt3), ") differ by less then factors of 2, we can assume that the population variances are the same.\n")
 
 MT = c(mt1, mt2, mt3) #combined set
 N=length(MT) #length of combined set
@@ -204,14 +204,16 @@ fstat = ((SSG/(k-1)) / (SSE/(N-k)))
 pval=pf(fstat,k-1,N-k,lower.tail=FALSE)
 #print(pval)
 
+cat("At a signifigance level of 1% (0.01) and a p-value of", pval, ", as the p value is greater than the our signifigance level, we do not reject the null hypothisis 'there is no difference in mean operating temperatures between the 3 tested divice models'. So there is statistical evidence on a 1% signifigance that there is no difference in mean operating temperatures between the 3 tested divice models.\n")
+
 #Pairwise T-test
 MT.df = drives[model=="Hitachi HDS723020BLA642" | model=="ST320005XXXX" | model=="WDC WD20EFRX", ] #get MT but as a dataframe
 pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the individual differences
 ```
 
-#Discussion:
+Discussion:
 - This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.
-- The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167.",
+- The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167".
 - The pairwise t-test shows that the higest difference in means was between the models 'WDC WD20EFRX' and 'ST320005XXXX'
 - It also shows that the lowest was between 'Hitachi HDS723020BLA642' and 'WDC WD20EFRX'."
       
@@ -219,8 +221,49 @@ pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the ind
 (b) [3 marks] At a significance level of 1%, test whether there is evidence for a difference in the proportion of failed
 drives between the three drive models. Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
 ```{r}
-cat("At a signifigance level of 1% (0.01) and a p-value of", pval, ", as the p value is greater than the our signifigance level, we do not reject the null hypothisis 'there is no difference in mean operating temperatures between the 3 tested divice models'. So there is statistical evidence on a 1% signifigance that there is no difference in mean operating temperatures between the 3 tested divice models.\n")
+#Hypothesis test
+#H0: The proportion of failed drives of all 3 tested drives will be the same
+#HA: The proportion of failed drives for atleast 1 tested drive with differ from the othersC
+
+#Get the proportion of each value
+m1    = drives[model=="Hitachi HDS723020BLA642", ]  #Get the subset of each specific model to be tested
+m1.ft = nrow(m1[m1$failed=="TRUE" & m1$days<366, ]) #Get the number of drives where failed=TRUE  from the model
+m1.ff = nrow(m1)-m1.ft                              #Get the number of drives where failed=FALSE from the model
+
+m2    = drives[model=="ST320005XXXX", ] 
+m2.ft = nrow(m2[m2$failed=="TRUE" & m2$days<366, ])
+m2.ff = nrow(m2)-m2.ft 
+
+m3    = drives[model=="WDC WD20EFRX", ] 
+m3.ft = nrow(m3[m3$failed=="TRUE" & m3$days<366, ])
+m3.ff = nrow(m3)-m3.ft
+
+#Create a matrix of the data
+values.obv = matrix(c(m1.ft, m1.ff,
+                      m2.ft, m2.ff,
+                      m3.ft, m3.ff),
+                    ncol=2, byrow=TRUE)
+
+#Display matrix
+colnames(values.obv) = c("failed", "didn't fail")
+rownames(values.obv) = c("Hitachi HDS723020BLA642", "ST320005XXXX", "WDC WD20EFRX")
+print(values.obv)
+
+#Calculate P-value
+print(chisq.test(values.obv))
+print("As R gives us a warning about the aproximation, one of the expected values must be less than five and we should simulate the p value with a randomisation distrobution by using simulate.p.value=TRUE")
+
+print(chisq.test(values.obv, simulate.p.value=TRUE))
 ```
+
+As the p-value (0.0004998) is under the 0.01 significance level, the null hupothesis is rejected.
+
+Discussion:
+- This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.
+- The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167".
+- Model "ST320005XXXX" has the highest proportion of divices that failed in the first year
+- Model "WDC WD20EFRX" has the lowest proportion of divices that failed in the first year and that may be why, out of the three testest models, many more drives of this model were recoreded as being used.
+
 
 
 The end
