@@ -204,8 +204,6 @@ fstat = ((SSG/(k-1)) / (SSE/(N-k)))
 pval=pf(fstat,k-1,N-k,lower.tail=FALSE)
 #print(pval)
 
-cat("At a signifigance level of 1% (0.01) and a p-value of", pval, ", as the p value is greater than the our signifigance level, we do not reject the null hypothisis 'there is no difference in mean operating temperatures between the 3 tested divice models'. So there is statistical evidence on a 1% signifigance that there is no difference in mean operating temperatures between the 3 tested divice models.\n")
-
 #Pairwise T-test
 MT.df = drives[model=="Hitachi HDS723020BLA642" | model=="ST320005XXXX" | model=="WDC WD20EFRX", ] #get MT but as a dataframe
 pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the individual differences
@@ -221,7 +219,7 @@ pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the ind
 (b) [3 marks] At a significance level of 1%, test whether there is evidence for a difference in the proportion of failed
 drives between the three drive models. Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
 ```{r}
-
+cat("At a signifigance level of 1% (0.01) and a p-value of", pval, ", as the p value is greater than the our signifigance level, we do not reject the null hypothisis 'there is no difference in mean operating temperatures between the 3 tested divice models'. So there is statistical evidence on a 1% signifigance that there is no difference in mean operating temperatures between the 3 tested divice models.\n")
 ```
 
 
