@@ -256,7 +256,7 @@ print("As R gives us a warning about the aproximation, one of the expected value
 print(chisq.test(values.obv, simulate.p.value=TRUE))
 ```
 
-As the p-value (0.0004998) is under the 0.01 significance level, the null hupothesis is rejected.
+As the p-value (0.0004998) is under the 0.01 significance level, the null hypothesis is rejected.
 
 Discussion:
 - This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.
