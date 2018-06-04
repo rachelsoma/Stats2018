@@ -36,10 +36,10 @@ below, declare that:
 
 Name               | Student Number | Contribution (%)
 -------------------|----------------|-----------------
-Rachel Hardie      |18820821        |
-Dylan Wang         |18998014        |
-Bradley McInerney  |19029900        |
-                   |                |
+Rachel Hardie      |18820821        | 33%
+Dylan Wang         |18998014        | 33%
+Bradley McInerney  |19029900        | 33%
+Lachlan Chant      |                | 1%
 
 <div style="page-break-before:always;"></div>
 
@@ -227,21 +227,21 @@ drives between the three drive models. Discuss your findings. Be specific about 
 
 #Get the proportion of each value
 m1    = drives[model=="Hitachi HDS723020BLA642", ]  #Get the subset of each specific model to be tested
-m1.ft = nrow(m1[m1$failed=="TRUE" & m1$days<366, ]) #Get the number of drives where failed=TRUE  from the model
-m1.ff = nrow(m1)-m1.ft                              #Get the number of drives where failed=FALSE from the model
+n.m1.ft = nrow(m1[m1$failed=="TRUE" & m1$days<366, ]) #Get the number of drives where failed=TRUE  from the model
+n.m1.ff = nrow(m1)-n.m1.ft                           #Get the number of drives where failed=FALSE from the model
 
 m2    = drives[model=="ST320005XXXX", ] 
-m2.ft = nrow(m2[m2$failed=="TRUE" & m2$days<366, ])
-m2.ff = nrow(m2)-m2.ft 
+n.m2.ft = nrow(m2[m2$failed=="TRUE" & m2$days<366, ])
+n.m2.ff = nrow(m2)-n.m2.ft 
 
 m3    = drives[model=="WDC WD20EFRX", ] 
-m3.ft = nrow(m3[m3$failed=="TRUE" & m3$days<366, ])
-m3.ff = nrow(m3)-m3.ft
+n.m3.ft = nrow(m3[m3$failed=="TRUE" & m3$days<366, ])
+n.m3.ff = nrow(m3)-n.m3.ft
 
 #Create a matrix of the data
-values.obv = matrix(c(m1.ft, m1.ff,
-                      m2.ft, m2.ff,
-                      m3.ft, m3.ff),
+values.obv = matrix(c(n.m1.ft, n.m1.ff,
+                      n.m2.ft, n.m2.ff,
+                      n.m3.ft, n.m3.ff),
                     ncol=2, byrow=TRUE)
 
 #Display matrix
