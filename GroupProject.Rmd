@@ -102,7 +102,7 @@ for (row in 1:n){
 
 ```{r}
 phat=n.drives.failed.y1/n
-paste("The probability of drives that fail in the first year is",phat, "(or", phat*100,"%)")
+paste("The probability that a drive will fail in the first year is",phat, "(or", phat*100,"%)")
 ```
 
 
@@ -112,13 +112,13 @@ year of operation
 ```{r}
 
 ##Generating a Bootstrap Distribution
-b = 1000 #number of bootstrap statistics
+b = 10000 #number of bootstrap statistics
 boot.dist = rep(NA, b)
 for (i in 1:b) {
   boot.sample = sample(failedY1.binom, replace=TRUE)
   boot.dist[i] = sum(boot.sample)/length(boot.sample) #As we are testing for proportion
 }
-hist(boot.dist)
+hist(boot.dist) #check histogram for normal distribution
 ```
 
 ```{r}
@@ -139,14 +139,14 @@ failed.days=days[drives.failed]
 
 cor.test(failed.meantemp,failed.days)
 ```
+Given a correlation coefficient of 0.04 it is reasonable to say that there is not evidence of higher mean temperature correlating to earlier hard drve failure.
 
 (b) [2 marks] Use randomisation to test at a significance level of 5% whether there is evidence that a higher mean op-
 erating temperature is associated to earlier failure.
 ```{r}
 #paired t-test
 
-t.test(failed.days, 
-       failed.meantemp, 
+t.test(failed.days,failed.meantemp, 
        paired=TRUE, 
        conf.level=0.95)
 
@@ -158,13 +158,18 @@ smoothScatter(failed.days, failed.meantemp,
      xlab="Days until failure",
      ylab="mean temperature")
 
-abline(0,1, col="blue", lwd=2)
 
+fit=lm(failed.meantemp ~ failed.days)
+abline(fit, col="blue", lwd=2)
+coef(fit)
 ```
+Using a paired t-test we see that the p-value is approaching zero (0.00000000000000022) so we can reject the null hyothesis.
 
 (c) [1 mark] Interpret your findings, comparing the results from parts (a) and (b). Discuss, in particular, whether
 there is evidence that a higher operating temperature causes drives to fail earlier.
 
+###Interpretation
+Given a correlation coefficient of 0.04 and a p-value of close to zero from a paired t-test, it is reasonable to say that there is not evidence of higher mean temperature correlating to earlier hard drive failure.
 
 
 Part 3 Three 2TB drive models
@@ -175,6 +180,7 @@ For this part, we only consider 2TB drives with the following model identifiers:
 "WDC WD20EFRX" (Western Digital)
 
 (a) [2 marks] At a significance level of 1%, test whether there is evidence for a difference in the mean operating temperature between the three drive models and conduct a pairwise t-test.
+
 Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
 ```{r}
 #Hypothisis test
@@ -216,7 +222,6 @@ Discussion:
 - The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167".
 - The pairwise t-test shows that the higest difference in means was between the models 'WDC WD20EFRX' and 'ST320005XXXX'
 - It also shows that the lowest was between 'Hitachi HDS723020BLA642' and 'WDC WD20EFRX'."
-      
 
 (b) [3 marks] At a significance level of 1%, test whether there is evidence for a difference in the proportion of failed
 drives between the three drive models. Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
