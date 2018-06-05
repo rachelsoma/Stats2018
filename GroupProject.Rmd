@@ -217,7 +217,7 @@ MT.df = drives[model=="Hitachi HDS723020BLA642" | model=="ST320005XXXX" | model=
 pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the individual differences
 ```
 
-Discussion:
+### Discussion:
 - This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.
 - The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167".
 - The pairwise t-test shows that the higest difference in means was between the models 'WDC WD20EFRX' and 'ST320005XXXX'
@@ -263,7 +263,7 @@ print(chisq.test(values.obv, simulate.p.value=TRUE))
 
 As the p-value (0.0004998) is under the 0.01 significance level, the null hypothesis is rejected.
 
-Discussion:
+### Discussion:
 - This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.
 - The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167".
 - Model "ST320005XXXX" has the highest proportion of divices that failed in the first year
