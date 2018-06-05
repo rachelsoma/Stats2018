@@ -139,10 +139,9 @@ failed.days=days[drives.failed]
 
 cor.test(failed.meantemp,failed.days)
 ```
-Given a correlation coefficient of 0.04 it is reasonable to say that there is not evidence of higher mean temperature correlating to earlier hard drve failure.
+Given a correlation coefficient of 0.04 it is reasonable to say that there is not enough evidence of higher mean temperature correlating to earlier hard drve failure.
 
-(b) [2 marks] Use randomisation to test at a significance level of 5% whether there is evidence that a higher mean op-
-erating temperature is associated to earlier failure.
+(b) [2 marks] Use randomisation to test at a significance level of 5% whether there is evidence that a higher mean operating temperature is associated to earlier failure.
 ```{r}
 #paired t-test
 
@@ -169,7 +168,7 @@ Using a paired t-test we see that the p-value is approaching zero (0.00000000000
 there is evidence that a higher operating temperature causes drives to fail earlier.
 
 ### Interpretation
-Given a correlation coefficient of 0.04 and a p-value of close to zero from a paired t-test, it is reasonable to say that there is not evidence of higher mean temperature correlating to earlier hard drive failure.
+Given a correlation coefficient of 0.04 and a p-value of close to zero from a paired t-test, it is reasonable to say that there is not enough evidence of higher mean temperature correlating to earlier hard drive failure.
 
 
 Part 3 Three 2TB drive models
@@ -195,7 +194,7 @@ mt3=drives[model=="WDC WD20EFRX",            "meantemp"]
 
 cat("Using an F-distribution to compute p-values requires all data that the subsets came from being normally distributed and all populations having the same variance.\n")
 hist(P, breaks=100)
-cat("Via a histogram of the data the subsets came from, we can assume it is normally distributed")
+cat("Via a histogram of the data the subsets came from, we can assume it is normally distributed.\n")
 cat("As all pf the data that the subsets came from is the same set AND the sample standard deviations(", sd(mt1), sd(mt2), sd(mt3), ") differ by less then factors of 2, we can assume that the population variances are the same.\n")
 
 MT = c(mt1, mt2, mt3) #combined set
@@ -210,7 +209,7 @@ fstat = ((SSG/(k-1)) / (SSE/(N-k)))
 pval=pf(fstat,k-1,N-k,lower.tail=FALSE)
 #print(pval)
 
-cat("At a signifigance level of 1% (0.01) and a p-value of", pval, ", as the p value is greater than the our signifigance level, we do not reject the null hypothisis 'there is no difference in mean operating temperatures between the 3 tested divice models'. So there is statistical evidence on a 1% signifigance that there is no difference in mean operating temperatures between the 3 tested divice models.\n")
+cat("At a signifigance level of 1% (0.01) and a p-value of", pval, ", as the p value is greater than the our significance level, we do not reject the null hypothisis 'there is no difference in mean operating temperatures between the 3 tested divice models'. So there is statistical evidence on a 1% significance that there is no difference in mean operating temperatures between the 3 tested device models.\n")
 
 #Pairwise T-test
 MT.df = drives[model=="Hitachi HDS723020BLA642" | model=="ST320005XXXX" | model=="WDC WD20EFRX", ] #get MT but as a dataframe
@@ -220,7 +219,7 @@ pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the ind
 ### Discussion:
 - This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.
 - The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167".
-- The pairwise t-test shows that the higest difference in means was between the models 'WDC WD20EFRX' and 'ST320005XXXX'
+- The pairwise t-test shows that the highest difference in means was between the models 'WDC WD20EFRX' and 'ST320005XXXX'
 - It also shows that the lowest was between 'Hitachi HDS723020BLA642' and 'WDC WD20EFRX'."
 
 (b) [3 marks] At a significance level of 1%, test whether there is evidence for a difference in the proportion of failed
@@ -228,7 +227,7 @@ drives between the three drive models. Discuss your findings. Be specific about 
 ```{r}
 #Hypothesis test
 #H0: The proportion of failed drives of all 3 tested drives will be the same
-#HA: The proportion of failed drives for atleast 1 tested drive with differ from the othersC
+#HA: The proportion of failed drives for at least 1 tested drive with differ from the others
 
 #Get the proportion of each value
 m1    = drives[model=="Hitachi HDS723020BLA642", ]  #Get the subset of each specific model to be tested
@@ -275,5 +274,5 @@ The end
 
 ```{r}
 #leave this as the last chunk
-detach(drives)
+detach()
 ```
