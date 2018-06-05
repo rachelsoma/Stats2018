@@ -168,8 +168,7 @@ Using a paired t-test we see that the p-value is approaching zero (0.00000000000
 (c) [1 mark] Interpret your findings, comparing the results from parts (a) and (b). Discuss, in particular, whether
 there is evidence that a higher operating temperature causes drives to fail earlier.
 
-###
-Interpretation
+### Interpretation
 Given a correlation coefficient of 0.04 and a p-value of close to zero from a paired t-test, it is reasonable to say that there is not evidence of higher mean temperature correlating to earlier hard drive failure.
 
 
