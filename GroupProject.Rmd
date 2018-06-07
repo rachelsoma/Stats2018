@@ -146,7 +146,6 @@ Given a correlation coefficient of 0.04 it is reasonable to say that there is no
 #paired t-test
 
 t.test(failed.days,failed.meantemp, 
-       paired=TRUE, 
        conf.level=0.95)
 
 
