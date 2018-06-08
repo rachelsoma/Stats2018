@@ -179,7 +179,7 @@ Discuss your findings. Be specific about any differences between the models that
 ### Hypothisis test
 H<sub>0</sub>: The mean of the mean operating temperatures of all 3 tested drives will be the same
 
-HA: The mean of the mean operating temperatures for atleast 1 tested drive with differ from the others
+H<sub>A</sub>: The mean of the mean operating temperatures for atleast 1 tested drive with differ from the others
 
 ```{r}
 #subsetting data
@@ -222,9 +222,9 @@ pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the ind
 drives between the three drive models. Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
 
 ### Hypothesis test:
-H0: The proportion of failed drives of all 3 tested drives will be the same
+H<sub>0</sub>: The proportion of failed drives of all 3 tested drives will be the same
 
-HA: The proportion of failed drives for at least 1 tested drive with differ from the others
+H<sub>A</sub>: The proportion of failed drives for at least 1 tested drive with differ from the others
 
 ```{r}
 #Get the proportion of each value
