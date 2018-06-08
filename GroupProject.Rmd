@@ -137,39 +137,29 @@ the drive and the time to failure of the drive are associated.
 failed.meantemp=meantemp[drives.failed]
 failed.days=days[drives.failed]
 
+plot(failed.meantemp~failed.days)
+abline(lm(failed.meantemp~failed.days),col="Red") ##??
+
 cor.test(failed.meantemp,failed.days)
+
+model=lm(failed.meantemp~failed.days)
+smoothScatter(failed.days, failed.meantemp,
+     pch = ".",
+     xlab="Days until failure",
+     ylab="mean temperature")
+summary(model)
 ```
 Given a correlation coefficient of -0.04 it is reasonable to say that there is not enough evidence of higher mean temperature correlating to earlier hard drve failure.
 
 (b) [2 marks] Use randomisation to test at a significance level of 5% whether there is evidence that a higher mean operating temperature is associated to earlier failure.
 ```{r}
-# b=1000
-# boot.meantemp = rep(NA, b)
-# for (i in 1:b) {
-#   boot.sample = sample(failed.meantemp,replace=TRUE)
-#   boot.meantemp[i]=boot.sample
-# }
-# hist(boot.meantemp) #check histogram for normal distribution
-# 
-
-
-#paired t-test
+#two-sided t-test
 
 t.test(failed.days,failed.meantemp,
        conf.level=0.95,
        alternative = "two.sided")
 
 
-#pairs(failed.days ~ failed.meantemp)
-
-smoothScatter(failed.days, failed.meantemp,
-     pch = ".",
-     xlab="Days until failure",
-     ylab="mean temperature")
-
-
-summary(lm(failed.meantemp ~ failed.days))
-abline(test, col="blue", lwd=2)
 
 ```
 Using a paired t-test we see that the p-value is approaching zero (0.00000000000000022) so we can reject the null hyothesis.
@@ -235,9 +225,7 @@ pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the ind
 (b) [3 marks] At a significance level of 1%, test whether there is evidence for a difference in the proportion of failed
 drives between the three drive models. Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
 ```{r}
-#Hypothesis test
-#H0: The proportion of failed drives of all 3 tested drives will be the same
-#HA: The proportion of failed drives for at least 1 tested drive with differ from the others
+
 
 #Get the proportion of each value
 m1    = drives[model=="Hitachi HDS723020BLA642", ]  #Get the subset of each specific model to be tested
@@ -273,6 +261,10 @@ print(chisq.test(values.obv, simulate.p.value=TRUE))
 As the p-value (0.0004998) is under the 0.01 significance level, the null hypothesis is rejected.
 
 ### Discussion:
+Hypothesis test:
+
+H0: The proportion of failed drives of all 3 tested drives will be the same
+HA: The proportion of failed drives for at least 1 tested drive with differ from the others
 - This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.
 - The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167".
 - Model "ST320005XXXX" has the highest proportion of divices that failed in the first year
