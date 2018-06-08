@@ -156,10 +156,11 @@ Given a correlation coefficient of -0.04 it is reasonable to say that there is n
 #paired t-test
 
 t.test(failed.days,failed.meantemp,
-       conf.level=0.95)
+       conf.level=0.95,
+       alternative = "two.sided")
 
 
-pairs(failed.days ~ failed.meantemp)
+#pairs(failed.days ~ failed.meantemp)
 
 smoothScatter(failed.days, failed.meantemp,
      pch = ".",
@@ -167,9 +168,9 @@ smoothScatter(failed.days, failed.meantemp,
      ylab="mean temperature")
 
 
-fit=lm(failed.meantemp ~ failed.days)
-abline(fit, col="blue", lwd=2)
-coef(fit)
+summary(lm(failed.meantemp ~ failed.days))
+abline(test, col="blue", lwd=2)
+
 ```
 Using a paired t-test we see that the p-value is approaching zero (0.00000000000000022) so we can reject the null hyothesis.
 
