@@ -185,6 +185,7 @@ Discuss your findings. Be specific about any differences between the models that
 ###Hypothisis test
 H0: The mean of the mean operating temperatures of all 3 tested drives will be the same
 HA: The mean of the mean operating temperatures for atleast 1 tested drive with differ from the others
+
 ```{r}
 #subsetting data
 P = drives[,"meantemp"] #The data the subsets came from
@@ -224,9 +225,12 @@ pairwise.t.test(MT.df$meantemp, MT.df$model) #Use a paired t test to see the ind
 
 (b) [3 marks] At a significance level of 1%, test whether there is evidence for a difference in the proportion of failed
 drives between the three drive models. Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
+
+###Hypothesis test:
+H0: The proportion of failed drives of all 3 tested drives will be the same
+HA: The proportion of failed drives for at least 1 tested drive with differ from the others
+
 ```{r}
-
-
 #Get the proportion of each value
 m1    = drives[model=="Hitachi HDS723020BLA642", ]  #Get the subset of each specific model to be tested
 n.m1.ft = nrow(m1[m1$failed=="TRUE" & m1$days<366, ]) #Get the number of drives where failed=TRUE  from the model
@@ -261,10 +265,6 @@ print(chisq.test(values.obv, simulate.p.value=TRUE))
 As the p-value (0.0004998) is under the 0.01 significance level, the null hypothesis is rejected.
 
 ### Discussion:
-Hypothesis test:
-
-H0: The proportion of failed drives of all 3 tested drives will be the same
-HA: The proportion of failed drives for at least 1 tested drive with differ from the others
 - This whole test is under the assumption that the 3 chosen models only come in (or are only recoded in) 2TB versions as there is no data in the data frame to determine the sizes of the drives.
 - The sizes in subsets for each drive varied greatly with the subset lengths: 11, 18, 167".
 - Model "ST320005XXXX" has the highest proportion of divices that failed in the first year
