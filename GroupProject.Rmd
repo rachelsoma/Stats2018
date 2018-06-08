@@ -177,7 +177,7 @@ For this part, we only consider 2TB drives with the following model identifiers:
 Discuss your findings. Be specific about any differences between the models that can be inferred from the data.
 
 ### Hypothisis test
-H0: The mean of the mean operating temperatures of all 3 tested drives will be the same
+H<sub>0</sub>: The mean of the mean operating temperatures of all 3 tested drives will be the same
 
 HA: The mean of the mean operating temperatures for atleast 1 tested drive with differ from the others
 
