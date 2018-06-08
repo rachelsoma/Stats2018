@@ -105,12 +105,10 @@ phat=n.drives.failed.y1/n
 paste("The probability that a drive will fail in the first year is",phat, "(or", phat*100,"%)")
 ```
 
-
 (c) [2 marks] Use bootstrapping to compute a 99% confidence interval for the proportion of drives that fail in the first
 year of operation
 
 ```{r}
-
 ##Generating a Bootstrap Distribution
 b = 10000 #number of bootstrap statistics
 boot.dist = rep(NA, b)
