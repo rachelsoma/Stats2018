@@ -142,12 +142,12 @@ abline(lm(failed.meantemp~failed.days),col="Red") ##??
 
 cor.test(failed.meantemp,failed.days)
 
-model=lm(failed.meantemp~failed.days)
+model.rand=lm(failed.meantemp~failed.days)
 smoothScatter(failed.days, failed.meantemp,
      pch = ".",
      xlab="Days until failure",
      ylab="mean temperature")
-summary(model)
+summary(model.rand)
 ```
 Given a correlation coefficient of -0.04 it is reasonable to say that there is not enough evidence of higher mean temperature correlating to earlier hard drve failure.
 
