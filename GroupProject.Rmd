@@ -184,6 +184,7 @@ Discuss your findings. Be specific about any differences between the models that
 
 ### Hypothisis test
 H0: The mean of the mean operating temperatures of all 3 tested drives will be the same
+
 HA: The mean of the mean operating temperatures for atleast 1 tested drive with differ from the others
 
 ```{r}
@@ -228,6 +229,7 @@ drives between the three drive models. Discuss your findings. Be specific about 
 
 ### Hypothesis test:
 H0: The proportion of failed drives of all 3 tested drives will be the same
+
 HA: The proportion of failed drives for at least 1 tested drive with differ from the others
 
 ```{r}
